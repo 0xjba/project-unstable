@@ -10,10 +10,10 @@ export const TerminalLayout = ({ children }: TerminalLayoutProps) => {
       {/* Terminal Border Frame */}
       <div className="fixed inset-0 pointer-events-none">
         {/* Corner brackets */}
-        <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-terminal-green" />
-        <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-terminal-green" />
-        <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-terminal-green" />
-        <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-terminal-green" />
+        <div className="absolute top-4 left-4 w-8 h-8 border-l-2 border-t-2 border-foreground" />
+        <div className="absolute top-4 right-4 w-8 h-8 border-r-2 border-t-2 border-foreground" />
+        <div className="absolute bottom-4 left-4 w-8 h-8 border-l-2 border-b-2 border-foreground" />
+        <div className="absolute bottom-4 right-4 w-8 h-8 border-r-2 border-b-2 border-foreground" />
       </div>
 
       {/* Main Content Area */}

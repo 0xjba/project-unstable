@@ -66,8 +66,8 @@ export const Dashboard = () => {
         {/* Chart Controls */}
         <div className="bg-card border border-terminal-grid p-4 font-mono">
           <div className="flex items-center justify-between">
-            <span className="text-terminal-green text-sm font-semibold">
-              📈 REAL-TIME ANALYTICS
+            <span className="text-foreground text-sm font-semibold">
+              [ANALYTICS]
             </span>
             <div className="flex gap-2">
               {[
@@ -80,8 +80,8 @@ export const Dashboard = () => {
                   onClick={() => setChartType(key as any)}
                   className={`px-3 py-1 text-xs border transition-colors ${
                     chartType === key
-                      ? 'border-terminal-red bg-terminal-red/10 text-terminal-red'
-                      : 'border-terminal-grid text-muted-foreground hover:border-terminal-green hover:text-terminal-green'
+                      ? 'border-foreground bg-muted text-terminal-bright'
+                      : 'border-terminal-grid text-muted-foreground hover:border-foreground hover:text-foreground'
                   }`}
                 >
                   {label}
@@ -98,13 +98,13 @@ export const Dashboard = () => {
         <div className="bg-card border border-terminal-grid p-4 font-mono">
           <div className="flex items-center justify-between text-xs">
             <div className="flex gap-6 text-muted-foreground">
-              <span>SYSTEM STATUS: <span className="text-terminal-green">OPERATIONAL</span></span>
-              <span>NETWORK: <span className="text-terminal-blue">ETHEREUM SEPOLIA</span></span>
-              <span>LAST UPDATE: <span className="text-terminal-amber">{new Date().toLocaleTimeString()}</span></span>
+              <span>SYS: <span className="text-foreground">OPERATIONAL</span></span>
+              <span>NET: <span className="text-foreground">ETHEREUM SEPOLIA</span></span>
+              <span>UPD: <span className="text-foreground">{new Date().toLocaleTimeString()}</span></span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-terminal-red animate-flicker">●</span>
-              <span className="text-terminal-green">LIVE</span>
+              <span className="text-terminal-bright">●</span>
+              <span className="text-foreground">LIVE</span>
             </div>
           </div>
         </div>

@@ -52,19 +52,11 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				// Terminal specific colors
+				// Terminal monochrome
 				terminal: {
-					green: 'hsl(var(--terminal-green))',
-					red: 'hsl(var(--terminal-red))',
-					amber: 'hsl(var(--terminal-amber))',
-					blue: 'hsl(var(--terminal-blue))',
-					cyan: 'hsl(var(--terminal-cyan))',
+					dim: 'hsl(var(--terminal-dim))',
+					bright: 'hsl(var(--terminal-bright))',
 					grid: 'hsl(var(--terminal-grid))'
-				},
-				glow: {
-					primary: 'hsl(var(--glow-primary))',
-					secondary: 'hsl(var(--glow-secondary))',
-					accent: 'hsl(var(--glow-accent))'
 				}
 			},
 			borderRadius: {

@@ -39,29 +39,29 @@ export const LiveStatsPanel = ({
   };
 
   const statItems = [
-    { icon: '🧍‍♂️', label: 'HOLDER COUNT', value: formatNumber(holderCount), color: 'text-terminal-blue' },
-    { icon: '🪙', label: 'TOTAL SUPPLY', value: formatNumber(totalSupply), color: 'text-terminal-green' },
-    { icon: '🔥', label: 'TOTAL BURNED', value: formatNumber(totalBurned), color: 'text-terminal-red' },
-    { icon: '🧫', label: 'TOTAL MINTED', value: formatNumber(totalMinted), color: 'text-terminal-cyan' },
-    { icon: '☢️', label: 'DESTABILIZATION COUNT', value: destabilizationCount, color: 'text-terminal-amber' },
-    { icon: '🕒', label: 'LAST DESTABILIZATION', value: formatTimeAgo(lastDestabilization), color: 'text-terminal-green' },
-    { icon: '⏳', label: 'COOLDOWN REMAINING', value: formatCooldown(cooldownRemaining), color: 'text-terminal-red' }
+    { label: 'HOLDER COUNT', value: formatNumber(holderCount), prefix: 'H' },
+    { label: 'TOTAL SUPPLY', value: formatNumber(totalSupply), prefix: 'S' },
+    { label: 'TOTAL BURNED', value: formatNumber(totalBurned), prefix: 'B' },
+    { label: 'TOTAL MINTED', value: formatNumber(totalMinted), prefix: 'M' },
+    { label: 'DESTABILIZATION COUNT', value: destabilizationCount, prefix: 'D' },
+    { label: 'LAST DESTABILIZATION', value: formatTimeAgo(lastDestabilization), prefix: 'L' },
+    { label: 'COOLDOWN REMAINING', value: formatCooldown(cooldownRemaining), prefix: 'C' }
   ];
 
   return (
     <div className="bg-card border border-terminal-grid p-4 font-mono">
       <div className="flex items-center gap-2 mb-4 border-b border-terminal-grid pb-2">
-        <span className="text-terminal-green text-sm font-semibold">🔸 LIVE STATS PANEL</span>
+        <span className="text-foreground text-sm font-semibold">[LIVE STATS]</span>
       </div>
       
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {statItems.map((item, index) => (
           <div key={index} className="bg-secondary border border-terminal-grid p-3 hover:bg-muted transition-colors">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-lg">{item.icon}</span>
+              <span className="text-terminal-bright">[{item.prefix}]</span>
               <span className="text-xs text-muted-foreground">{item.label}</span>
             </div>
-            <div className={`text-lg font-bold ${item.color} animate-pulse-glow`}>
+            <div className="text-lg font-bold text-terminal-bright">
               {item.value}
             </div>
           </div>
