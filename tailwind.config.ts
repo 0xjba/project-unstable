@@ -52,15 +52,19 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
-				sidebar: {
-					DEFAULT: 'hsl(var(--sidebar-background))',
-					foreground: 'hsl(var(--sidebar-foreground))',
-					primary: 'hsl(var(--sidebar-primary))',
-					'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-					accent: 'hsl(var(--sidebar-accent))',
-					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-					border: 'hsl(var(--sidebar-border))',
-					ring: 'hsl(var(--sidebar-ring))'
+				// Terminal specific colors
+				terminal: {
+					green: 'hsl(var(--terminal-green))',
+					red: 'hsl(var(--terminal-red))',
+					amber: 'hsl(var(--terminal-amber))',
+					blue: 'hsl(var(--terminal-blue))',
+					cyan: 'hsl(var(--terminal-cyan))',
+					grid: 'hsl(var(--terminal-grid))'
+				},
+				glow: {
+					primary: 'hsl(var(--glow-primary))',
+					secondary: 'hsl(var(--glow-secondary))',
+					accent: 'hsl(var(--glow-accent))'
 				}
 			},
 			borderRadius: {
@@ -84,11 +88,37 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'terminal-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 5px hsl(var(--glow-primary) / 0.5)'
+					},
+					'50%': {
+						boxShadow: '0 0 20px hsl(var(--glow-primary) / 0.8), 0 0 30px hsl(var(--glow-primary) / 0.4)'
+					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						opacity: '0.8'
+					},
+					'50%': {
+						opacity: '1'
+					}
+				},
+				'flicker': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.8' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'terminal-glow': 'terminal-glow 2s ease-in-out infinite',
+				'pulse-glow': 'pulse-glow 1.5s ease-in-out infinite',
+				'flicker': 'flicker 0.1s ease-in-out infinite'
+			},
+			fontFamily: {
+				'mono': ['JetBrains Mono', 'Courier New', 'monospace']
 			}
 		}
 	},
