@@ -57,7 +57,6 @@ export const LiveStatsPanel = ({
         {statItems.map((item, index) => (
           <div key={index} className="bg-secondary border border-terminal-grid p-3 hover:bg-muted transition-colors">
             <div className="flex items-center gap-2 mb-2">
-              <span className="text-terminal-bright">[{item.prefix}]</span>
               <span className="text-xs text-muted-foreground">{item.label}</span>
             </div>
             <div className="text-lg font-bold text-terminal-bright">

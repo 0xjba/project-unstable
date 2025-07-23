@@ -110,7 +110,8 @@ export default {
 				'flicker': 'flicker 0.1s ease-in-out infinite'
 			},
 			fontFamily: {
-				'mono': ['JetBrains Mono', 'Courier New', 'monospace']
+				sans: ["Geist", "system-ui", "sans-serif"],
+				mono: ["Geist", "monospace"]
 			}
 		}
 	},

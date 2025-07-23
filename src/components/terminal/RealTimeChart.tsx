@@ -1,4 +1,4 @@
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar, AreaChart, Area } from 'recharts';
 
 interface ChartData {
   round: number;
@@ -54,15 +54,33 @@ export const RealTimeChart = ({ data, chartType }: RealTimeChartProps) => {
       
       case 'supply':
         return (
-          <LineChart data={data}>
-            <Line 
+          <AreaChart data={data}>
+            <CartesianGrid strokeDasharray="1 1" stroke="hsl(var(--terminal-grid))" />
+            <XAxis 
+              dataKey="round" 
+              tick={{ fill: 'hsl(var(--foreground))', fontSize: 10 }}
+              axisLine={{ stroke: 'hsl(var(--terminal-grid))' }}
+            />
+            <YAxis 
+              tick={{ fill: 'hsl(var(--foreground))', fontSize: 10 }}
+              axisLine={{ stroke: 'hsl(var(--terminal-grid))' }}
+            />
+            <Tooltip content={<CustomTooltip />} />
+            <defs>
+              <linearGradient id="supplyGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="hsl(var(--foreground))" stopOpacity={0.3}/>
+                <stop offset="95%" stopColor="hsl(var(--foreground))" stopOpacity={0}/>
+              </linearGradient>
+            </defs>
+            <Area 
               type="monotone" 
               dataKey="totalSupply" 
               stroke="hsl(var(--foreground))" 
               strokeWidth={1}
+              fill="url(#supplyGradient)"
               dot={false}
             />
-          </LineChart>
+          </AreaChart>
         );
       
       case 'holders':
@@ -78,7 +96,7 @@ export const RealTimeChart = ({ data, chartType }: RealTimeChartProps) => {
               tick={{ fill: 'hsl(var(--foreground))', fontSize: 10 }}
               axisLine={{ stroke: 'hsl(var(--terminal-grid))' }}
             />
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip />} cursor={false} />
             <Bar dataKey="holdersAffected" fill="hsl(var(--terminal-dim))" />
           </BarChart>
         );
