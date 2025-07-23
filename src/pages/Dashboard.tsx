@@ -3,6 +3,7 @@ import { TerminalHeader } from '@/components/terminal/TerminalHeader';
 import { LiveStatsPanel } from '@/components/terminal/LiveStatsPanel';
 import { RealTimeChart } from '@/components/terminal/RealTimeChart';
 import { TerminalLayout } from '@/components/terminal/TerminalLayout';
+import { TopNavbar } from '@/components/terminal/TopNavbar';
 
 // Mock data - in real app this would come from blockchain/API
 const generateMockData = () => {
@@ -50,7 +51,8 @@ const Dashboard = () => {
 
   return (
     <TerminalLayout>
-      <div className="space-y-6">
+      <TopNavbar />
+      <div className="mt-8 space-y-6">
         {/* Terminal Header */}
         <TerminalHeader
           codename="stableCoin"
