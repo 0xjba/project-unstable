@@ -55,23 +55,12 @@ export const RealTimeChart = ({ data, chartType }: RealTimeChartProps) => {
       case 'supply':
         return (
           <LineChart data={data}>
-            <CartesianGrid strokeDasharray="1 1" stroke="hsl(var(--terminal-grid))" />
-            <XAxis 
-              dataKey="round" 
-              tick={{ fill: 'hsl(var(--foreground))', fontSize: 10 }}
-              axisLine={{ stroke: 'hsl(var(--terminal-grid))' }}
-            />
-            <YAxis 
-              tick={{ fill: 'hsl(var(--foreground))', fontSize: 10 }}
-              axisLine={{ stroke: 'hsl(var(--terminal-grid))' }}
-            />
-            <Tooltip content={<CustomTooltip />} />
             <Line 
               type="monotone" 
               dataKey="totalSupply" 
-              stroke="hsl(var(--terminal-bright))" 
+              stroke="hsl(var(--foreground))" 
               strokeWidth={1}
-              dot={{ fill: 'hsl(var(--terminal-bright))', strokeWidth: 1, r: 2 }}
+              dot={false}
             />
           </LineChart>
         );

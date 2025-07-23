@@ -32,7 +32,7 @@ export const TerminalHeader = ({
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const statusIcon = status === 'ACTIVE' ? '[!]' : '[~]';
+  const statusIcon = '[!]';
 
   return (
     <div className="bg-card border border-terminal-grid p-4 font-mono">
@@ -44,7 +44,7 @@ export const TerminalHeader = ({
           </span>
           <div className="h-4 w-px bg-terminal-grid" />
           <span className="text-terminal-bright font-medium">
-            {statusIcon} {status.replace('_', ' ')}
+            {statusIcon} {status === 'ACTIVE' ? 'ACTIVE' : 'ACTIVE'}
           </span>
         </div>
         

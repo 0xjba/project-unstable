@@ -44,8 +44,7 @@ export const LiveStatsPanel = ({
     { label: 'TOTAL BURNED', value: formatNumber(totalBurned), prefix: 'B' },
     { label: 'TOTAL MINTED', value: formatNumber(totalMinted), prefix: 'M' },
     { label: 'DESTABILIZATION COUNT', value: destabilizationCount, prefix: 'D' },
-    { label: 'LAST DESTABILIZATION', value: formatTimeAgo(lastDestabilization), prefix: 'L' },
-    { label: 'COOLDOWN REMAINING', value: formatCooldown(cooldownRemaining), prefix: 'C' }
+    { label: 'LAST DESTABILIZATION', value: formatTimeAgo(lastDestabilization), prefix: 'L' }
   ];
 
   return (

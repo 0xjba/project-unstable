@@ -53,8 +53,8 @@ export const Dashboard = () => {
       <div className="space-y-6">
         {/* Terminal Header */}
         <TerminalHeader
-          codename="UnstableCoin::Testnet"
-          status={liveStats.cooldownRemaining > 0 ? 'COOLING_DOWN' : 'ACTIVE'}
+          codename="stableCoin"
+          status="ACTIVE"
           nextDestabilizationETA={liveStats.cooldownRemaining}
           contractAddress="0x742d35cc6e1e8e3e8e8e8e8e8e8e8e8e8e8e8e8e"
           chainId="Sepolia (11155111)"
