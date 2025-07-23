@@ -53,7 +53,7 @@ export const LiveStatsPanel = ({
         <span className="text-foreground text-sm font-semibold">[LIVE STATS]</span>
       </div>
       
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
         {statItems.map((item, index) => (
           <div key={index} className="bg-secondary border border-terminal-grid p-3 hover:bg-muted transition-colors">
             <div className="flex items-center gap-2 mb-2">

@@ -131,7 +131,7 @@ export const RealTimeChart = ({ data, chartType }: RealTimeChartProps) => {
         </div>
       </div>
       
-      <div className="h-64">
+      <div className="h-48 sm:h-64">
         <ResponsiveContainer width="100%" height="100%">
           {renderChart()}
         </ResponsiveContainer>

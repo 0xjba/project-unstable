@@ -94,7 +94,7 @@ const Faucet = () => {
             <span className="text-foreground text-sm font-semibold">[NETWORK] TESTNET CONFIGURATION</span>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 text-sm">
             <div className="space-y-2">
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Network Name:</span>
@@ -111,7 +111,7 @@ const Faucet = () => {
             </div>
             
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <span className="text-muted-foreground">RPC URL:</span>
                 <div className="flex items-center gap-2">
                   <span className="text-foreground text-xs">https://rpc.testnet.unstable</span>
@@ -120,7 +120,7 @@ const Faucet = () => {
                   </Button>
                 </div>
               </div>
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <span className="text-muted-foreground">Explorer:</span>
                 <Button variant="ghost" size="sm" className="h-6 flex items-center gap-1 p-1">
                   <span className="text-xs">View</span>
@@ -133,8 +133,8 @@ const Faucet = () => {
 
         {/* Status Footer */}
         <div className="bg-secondary border border-terminal-grid p-3 font-mono">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+            <div className="flex flex-wrap items-center gap-4">
               <span className="text-muted-foreground">STATUS: OPERATIONAL</span>
               <span className="text-muted-foreground">NETWORK: TESTNET</span>
             </div>

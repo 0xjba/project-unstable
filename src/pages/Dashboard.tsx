@@ -67,11 +67,11 @@ const Dashboard = () => {
 
         {/* Chart Controls */}
         <div className="bg-card border border-terminal-grid p-4 font-mono">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <span className="text-foreground text-sm font-semibold">
               [ANALYTICS]
             </span>
-            <div className="flex gap-2">
+            <div className="flex flex-wrap gap-2">
               {[
                 { key: 'mintBurn', label: 'MINT/BURN' },
                 { key: 'supply', label: 'SUPPLY' },
@@ -98,8 +98,8 @@ const Dashboard = () => {
 
         {/* Status Footer */}
         <div className="bg-card border border-terminal-grid p-4 font-mono">
-          <div className="flex items-center justify-between text-xs">
-            <div className="flex gap-6 text-muted-foreground">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
+            <div className="flex flex-wrap gap-4 sm:gap-6 text-muted-foreground">
               <span>SYS: <span className="text-foreground">OPERATIONAL</span></span>
               <span>NET: <span className="text-foreground">ETHEREUM SEPOLIA</span></span>
               <span>UPD: <span className="text-foreground">{new Date().toLocaleTimeString()}</span></span>

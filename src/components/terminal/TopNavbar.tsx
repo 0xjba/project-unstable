@@ -12,7 +12,10 @@ export const TopNavbar = () => {
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo/Brand */}
         <div className="flex items-center gap-2">
-          <span className="text-terminal-bright text-lg font-bold">[PROJECT UNSTABLE]</span>
+          <span className="text-terminal-bright text-sm sm:text-lg font-bold">
+            <span className="hidden sm:inline">[PROJECT UNSTABLE]</span>
+            <span className="sm:hidden">[PU]</span>
+          </span>
         </div>
 
         {/* Navigation Links */}
@@ -24,15 +27,15 @@ export const TopNavbar = () => {
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-4 py-2 border border-terminal-grid transition-colors ${
+                  `flex items-center gap-2 px-3 py-2 border border-foreground transition-colors ${
                     isActive
-                      ? 'bg-terminal-bright text-background font-semibold'
-                      : 'bg-secondary text-foreground hover:bg-muted'
+                      ? 'bg-foreground text-background font-semibold'
+                      : 'bg-transparent text-foreground hover:bg-foreground/10'
                   }`
                 }
               >
                 <Icon size={16} />
-                <span className="text-sm">{item.label}</span>
+                <span className="text-sm hidden sm:inline">{item.label}</span>
               </NavLink>
             );
           })}
