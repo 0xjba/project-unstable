@@ -20,7 +20,7 @@ const generateMockData = () => {
   return data;
 };
 
-export const Dashboard = () => {
+const Dashboard = () => {
   const [chartType, setChartType] = useState<'mintBurn' | 'supply' | 'holders'>('mintBurn');
   const [mockData] = useState(generateMockData());
   
@@ -112,3 +112,5 @@ export const Dashboard = () => {
     </TerminalLayout>
   );
 };
+
+export default Dashboard;
