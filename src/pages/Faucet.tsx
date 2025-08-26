@@ -165,15 +165,15 @@ const Faucet = () => {
             <div className="space-y-3">
               <div className="flex justify-between font-normal">
                 <span className="text-muted-foreground">Network Name:</span>
-                <span className="text-foreground font-normal">UnstableCoin Testnet</span>
+                <span className="text-foreground font-normal">TEN Testnet</span>
               </div>
               <div className="flex justify-between font-normal">
                 <span className="text-muted-foreground">Chain ID:</span>
-                <span className="text-foreground font-normal">31337</span>
+                <span className="text-foreground font-normal">443</span>
               </div>
               <div className="flex justify-between font-normal">
                 <span className="text-muted-foreground">Currency:</span>
-                <span className="text-foreground font-normal">USTC</span>
+                <span className="text-foreground font-normal">UNSTBL</span>
               </div>
             </div>
             
@@ -181,7 +181,7 @@ const Faucet = () => {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <span className="text-muted-foreground font-normal">RPC URL:</span>
                 <div className="flex items-center gap-2">
-                  <span className="text-foreground text-xs font-mono">https://rpc.testnet.unstable</span>
+                  <span className="text-foreground text-xs font-mono">https://testnet.ten.xyz</span>
                   <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
                     <Copy size={12} />
                   </Button>
@@ -189,7 +189,12 @@ const Faucet = () => {
               </div>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <span className="text-muted-foreground font-normal">Explorer:</span>
-                <Button variant="ghost" size="sm" className="h-6 flex items-center gap-1 p-1">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="h-6 flex items-center gap-1 p-1"
+                  onClick={() => window.open('https://tenscan.io', '_blank')}
+                >
                   <span className="text-xs font-normal">View</span>
                   <ExternalLink size={12} />
                 </Button>
