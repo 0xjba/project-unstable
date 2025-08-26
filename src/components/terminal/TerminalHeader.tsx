@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
+import { formatTimeDifference } from '@/lib/timeUtils';
 
 interface TerminalHeaderProps {
   codename: string;
-  status: 'ACTIVE' | 'COOLING_DOWN';
+  status: 'ACTIVE' | 'COOLING_DOWN' | 'LOADING';
   nextDestabilizationETA: number; // seconds
   contractAddress: string;
   chainId: string;
@@ -26,44 +27,38 @@ export const TerminalHeader = ({
   }, []);
 
   const formatTime = (seconds: number) => {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    return formatTimeDifference(seconds);
   };
 
-  const statusIcon = '[!]';
-
   return (
-    <div className="bg-card border border-terminal-grid p-4 font-mono">
+    <div className="bg-card border border-border p-6 font-mono relative">
+      {/* Corner plus signs */}
+      <div className="absolute top-0 left-0 text-foreground text-base transform -translate-x-1/2 -translate-y-1/2">+</div>
+      <div className="absolute top-0 right-0 text-foreground text-base transform translate-x-1/2 -translate-y-1/2">+</div>
+      <div className="absolute bottom-0 left-0 text-foreground text-base transform -translate-x-1/2 translate-y-1/2">+</div>
+      <div className="absolute bottom-0 right-0 text-foreground text-base transform translate-x-1/2 translate-y-1/2">+</div>
+      
       {/* Top row - Project info */}
-      <div className="flex items-center justify-between mb-3 border-b border-terminal-grid pb-3">
-        <div className="flex items-center gap-4">
-          <span className="text-foreground text-lg font-semibold">
-            {codename}
-          </span>
-          <div className="h-4 w-px bg-terminal-grid" />
-          <span className="text-terminal-bright font-medium">
-            {statusIcon} {status === 'ACTIVE' ? 'ACTIVE' : 'ACTIVE'}
+      <div className="flex items-center justify-between mb-4 border-b border-border pb-4">
+        <div className="flex items-center gap-6">
+          <span className="text-foreground text-xl font-normal tracking-wide">
+            [UNSTABLE COIN]
           </span>
         </div>
         
-        <div className="flex items-center gap-6 text-sm">
+        <div className="flex items-center gap-4 text-sm font-normal">
           <div className="text-muted-foreground">
-            CHAIN: <span className="text-foreground">{chainId}</span>
-          </div>
-          <div className="text-muted-foreground">
-            CONTRACT: <span className="text-foreground font-mono text-xs">{contractAddress}</span>
+            WORLD'S MOST UNSTABLE CRYPTOGRAPHICALLY VERIFIABLE TOKEN
           </div>
         </div>
       </div>
 
       {/* Bottom row - Countdown */}
       <div className="flex items-center justify-between">
-        <div className="text-muted-foreground">
+        <div className="text-muted-foreground text-sm font-normal">
           NEXT DESTABILIZATION ETA:
         </div>
-        <div className="text-terminal-bright text-xl font-bold">
+        <div className="text-lg font-normal tracking-wide terminal-text">
           {formatTime(timeLeft)}
         </div>
       </div>

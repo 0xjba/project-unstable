@@ -1,25 +1,25 @@
 import { NavLink } from 'react-router-dom';
-import { Monitor, Droplets } from 'lucide-react';
+import { Monitor, Droplets, Activity } from 'lucide-react';
 
 export const TopNavbar = () => {
   const navItems = [
     { path: '/', label: 'TERMINAL', icon: Monitor },
     { path: '/faucet', label: 'FAUCET', icon: Droplets },
+    { path: '/logs', label: 'LOGS', icon: Activity },
   ];
 
   return (
-    <nav className="bg-card border-b border-terminal-grid p-4 font-mono">
+    <nav className="bg-card border-b border-border p-4 font-mono">
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         {/* Logo/Brand */}
-        <div className="flex items-center gap-2">
-          <span className="text-terminal-bright text-sm sm:text-lg font-bold">
-            <span className="hidden sm:inline">[PROJECT UNSTABLE]</span>
-            <span className="sm:hidden">[PU]</span>
+        <div className="flex items-center gap-3">
+          <span className="text-foreground text-xl font-normal tracking-wide">
+            [PROJECT UNSTABLE]
           </span>
         </div>
 
         {/* Navigation Links */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           {navItems.map((item) => {
             const Icon = item.icon;
             return (
@@ -27,15 +27,15 @@ export const TopNavbar = () => {
                 key={item.path}
                 to={item.path}
                 className={({ isActive }) =>
-                  `flex items-center gap-2 px-3 py-2 border border-foreground transition-colors ${
+                  `flex items-center gap-2 px-4 py-2 border border-border transition-colors text-sm font-normal ${
                     isActive
-                      ? 'bg-foreground text-background font-semibold'
-                      : 'bg-transparent text-foreground hover:bg-foreground/10'
+                      ? 'bg-accent text-accent-foreground border-foreground'
+                      : 'bg-transparent text-muted-foreground hover:bg-accent hover:text-accent-foreground'
                   }`
                 }
               >
-                <Icon size={16} />
-                <span className="text-sm hidden sm:inline">{item.label}</span>
+                <Icon size={14} />
+                <span className="hidden sm:inline">{item.label}</span>
               </NavLink>
             );
           })}

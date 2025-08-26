@@ -110,8 +110,19 @@ export default {
 				'flicker': 'flicker 0.1s ease-in-out infinite'
 			},
 			fontFamily: {
-				sans: ["Geist", "system-ui", "sans-serif"],
-				mono: ["Geist", "monospace"]
+				sans: ["Share Tech Mono", "monospace"],
+				mono: ["Share Tech Mono", "monospace"]
+			},
+			fontWeight: {
+				thin: '100',
+				extralight: '200',
+				light: '300',
+				normal: '400',
+				medium: '500',
+				semibold: '600',
+				bold: '700',
+				extrabold: '800',
+				black: '900'
 			}
 		}
 	},

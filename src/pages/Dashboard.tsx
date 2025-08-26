@@ -3,72 +3,104 @@ import { TerminalHeader } from '@/components/terminal/TerminalHeader';
 import { LiveStatsPanel } from '@/components/terminal/LiveStatsPanel';
 import { RealTimeChart } from '@/components/terminal/RealTimeChart';
 import { TerminalLayout } from '@/components/terminal/TerminalLayout';
-import { TopNavbar } from '@/components/terminal/TopNavbar';
+import { PageContainer } from '@/components/terminal/PageContainer';
+import { useContractStats } from '@/hooks/useContractStats';
+import { CONTRACT_CONFIG, MOCK_CONFIG } from '@/lib/config';
 
-// Mock data - in real app this would come from blockchain/API
-const generateMockData = () => {
+// Generate chart data from contract stats
+const generateChartData = (stats: any) => {
+  // If no real contract data (all zeros), return empty array
+  const hasRealData = stats.holderCount > 0 || parseFloat(stats.totalSupply) > 0 || 
+                     parseFloat(stats.totalMinted) > 0 || parseFloat(stats.totalBurned) > 0 || 
+                     stats.destabilizationCount > 0;
+  
+  if (!hasRealData) {
+    return []; // Return empty array for no data
+  }
+  
   const data = [];
-  for (let i = 1; i <= 10; i++) {
+  const rounds = Math.max(stats.destabilizationCount, 1);
+  
+  for (let i = 1; i <= rounds; i++) {
+    // For now, distribute the total values across rounds
+    // In a real implementation, you'd get historical data from events
+    const roundMinted = i === rounds ? parseFloat(stats.totalMinted) / rounds : parseFloat(stats.totalMinted) / rounds * 0.8;
+    const roundBurned = i === rounds ? parseFloat(stats.totalBurned) / rounds : parseFloat(stats.totalBurned) / rounds * 0.8;
+    const roundSupply = parseFloat(stats.totalSupply) * (1 - (i - 1) * 0.1); // Decreasing supply over time
+    const roundHolders = Math.max(1, Math.floor(stats.holderCount * (1 - (i - 1) * 0.05))); // Decreasing holders
+    
     data.push({
       round: i,
-      minted: Math.floor(Math.random() * 10000) + 5000,
-      burned: Math.floor(Math.random() * 8000) + 3000,
-      totalSupply: 1000000 - (i * 5000) + Math.floor(Math.random() * 20000),
-      holdersAffected: Math.floor(Math.random() * 50) + 10,
-      timestamp: new Date(Date.now() - (10 - i) * 24 * 60 * 60 * 1000).toISOString()
+      minted: Math.floor(roundMinted),
+      burned: Math.floor(roundBurned),
+      totalSupply: Math.floor(roundSupply),
+      holdersAffected: roundHolders,
+      timestamp: new Date(Date.now() - (rounds - i) * 24 * 60 * 60 * 1000).toISOString()
     });
   }
+  
   return data;
 };
 
 const Dashboard = () => {
   const [chartType, setChartType] = useState<'mintBurn' | 'supply' | 'holders'>('mintBurn');
-  const [mockData] = useState(generateMockData());
   
-  // Mock real-time data
-  const [liveStats, setLiveStats] = useState({
-    holderCount: 1247,
-    totalSupply: "943,627",
-    totalBurned: "156,373",
-    totalMinted: "1,100,000",
-    destabilizationCount: 8,
-    lastDestabilization: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-    cooldownRemaining: 14523 // seconds
-  });
-
-  // Simulate live updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLiveStats(prev => ({
-        ...prev,
-        holderCount: prev.holderCount + Math.floor(Math.random() * 3) - 1,
-        cooldownRemaining: Math.max(0, prev.cooldownRemaining - 1)
-      }));
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, []);
+  // Real contract data
+  const { stats, loading, error } = useContractStats(10000); // Refresh every 10 seconds
 
   return (
     <TerminalLayout>
-      <TopNavbar />
-      <div className="mt-8 space-y-6">
+      <PageContainer>
         {/* Terminal Header */}
         <TerminalHeader
           codename="stableCoin"
-          status="ACTIVE"
-          nextDestabilizationETA={liveStats.cooldownRemaining}
-          contractAddress="0x742d35cc6e1e8e3e8e8e8e8e8e8e8e8e8e8e8e8e"
-          chainId="Sepolia (11155111)"
+          status={loading ? "LOADING" : "ACTIVE"}
+          nextDestabilizationETA={stats.cooldownRemaining}
+          contractAddress={CONTRACT_CONFIG.CONTRACT_ADDRESS}
+          chainId={CONTRACT_CONFIG.CHAIN_ID}
         />
 
+        {/* Mock Mode Indicator */}
+        {MOCK_CONFIG.ENABLED && (
+          <div className="bg-yellow-500/10 border border-yellow-500 p-4 font-mono">
+            <div className="text-yellow-500 text-sm">
+              MOCK MODE: Displaying demo data for demonstration purposes
+            </div>
+          </div>
+        )}
+
+        {/* Error Display */}
+        {error && !MOCK_CONFIG.ENABLED && (
+          <div className="bg-destructive/10 border border-destructive p-4 font-mono">
+            <div className="text-destructive text-sm">
+              ERROR: {error}
+            </div>
+          </div>
+        )}
+
         {/* Live Stats */}
-        <LiveStatsPanel {...liveStats} />
+        <LiveStatsPanel 
+          holderCount={stats.holderCount}
+          totalSupply={stats.totalSupply}
+          totalBurned={stats.totalBurned}
+          totalMinted={stats.totalMinted}
+          destabilizationCount={stats.destabilizationCount}
+          eliminatedCount={stats.eliminatedCount}
+          cooldownRemaining={stats.cooldownRemaining}
+          loading={loading}
+          hasError={!!error}
+        />
 
         {/* Chart Controls */}
-        <div className="bg-card border border-terminal-grid p-4 font-mono">
+        <div className="bg-card border border-border p-6 font-mono relative">
+          {/* Corner plus signs */}
+          <div className="absolute top-0 left-0 text-foreground text-base transform -translate-x-1/2 -translate-y-1/2">+</div>
+          <div className="absolute top-0 right-0 text-foreground text-base transform translate-x-1/2 -translate-y-1/2">+</div>
+          <div className="absolute bottom-0 left-0 text-foreground text-base transform -translate-x-1/2 translate-y-1/2">+</div>
+          <div className="absolute bottom-0 right-0 text-foreground text-base transform translate-x-1/2 translate-y-1/2">+</div>
+          
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-            <span className="text-foreground text-sm font-semibold">
+            <span className="text-foreground text-lg font-normal tracking-wide">
               [ANALYTICS]
             </span>
             <div className="flex flex-wrap gap-2">
@@ -80,10 +112,10 @@ const Dashboard = () => {
                 <button
                   key={key}
                   onClick={() => setChartType(key as any)}
-                  className={`px-3 py-1 text-xs border transition-colors ${
+                  className={`px-4 py-2 text-sm border transition-colors font-normal ${
                     chartType === key
-                      ? 'border-foreground bg-muted text-terminal-bright'
-                      : 'border-terminal-grid text-muted-foreground hover:border-foreground hover:text-foreground'
+                      ? 'border-foreground bg-accent text-accent-foreground'
+                      : 'border-border text-muted-foreground hover:border-foreground hover:text-foreground'
                   }`}
                 >
                   {label}
@@ -94,23 +126,28 @@ const Dashboard = () => {
         </div>
 
         {/* Chart */}
-        <RealTimeChart data={mockData} chartType={chartType} />
+        <RealTimeChart data={generateChartData(stats)} chartType={chartType} />
 
         {/* Status Footer */}
-        <div className="bg-card border border-terminal-grid p-4 font-mono">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs">
-            <div className="flex flex-wrap gap-4 sm:gap-6 text-muted-foreground">
-              <span>SYS: <span className="text-foreground">OPERATIONAL</span></span>
-              <span>NET: <span className="text-foreground">ETHEREUM SEPOLIA</span></span>
-              <span>UPD: <span className="text-foreground">{new Date().toLocaleTimeString()}</span></span>
+        <div className="bg-card border border-border p-6 font-mono">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-sm">
+            <div className="flex flex-wrap gap-6 text-muted-foreground font-normal">
+              <span>SYS: <span className={`font-normal ${(error && !MOCK_CONFIG.ENABLED) || (!MOCK_CONFIG.ENABLED && stats.holderCount === 0 && parseFloat(stats.totalSupply) === 0 && parseFloat(stats.totalMinted) === 0 && parseFloat(stats.totalBurned) === 0 && stats.destabilizationCount === 0) ? 'text-destructive' : 'text-foreground'}`}>
+                {(error && !MOCK_CONFIG.ENABLED) || (!MOCK_CONFIG.ENABLED && stats.holderCount === 0 && parseFloat(stats.totalSupply) === 0 && parseFloat(stats.totalMinted) === 0 && parseFloat(stats.totalBurned) === 0 && stats.destabilizationCount === 0) ? 'DOWN' : 'OPERATIONAL'}
+              </span></span>
+              <span>CHAIN: <span className="text-foreground font-normal">TEN</span></span>
+              <span>UPD: <span className="text-foreground font-normal">{new Date().toLocaleTimeString()}</span></span>
+              <span>CONTRACT: <span className="text-foreground font-normal">{CONTRACT_CONFIG.CONTRACT_ADDRESS}</span></span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-terminal-bright">●</span>
-              <span className="text-foreground">LIVE</span>
+              <span className={`${(error && !MOCK_CONFIG.ENABLED) || (!MOCK_CONFIG.ENABLED && stats.holderCount === 0 && parseFloat(stats.totalSupply) === 0 && parseFloat(stats.totalMinted) === 0 && parseFloat(stats.totalBurned) === 0 && stats.destabilizationCount === 0) ? 'text-yellow-500 animate-pulse drop-shadow-[0_0_8px_rgba(234,179,8,0.5)]' : 'text-green-500 animate-pulse drop-shadow-[0_0_8px_rgba(34,197,94,0.5)]'}`}>●</span>
+              <span className="text-foreground font-normal">
+                {(error && !MOCK_CONFIG.ENABLED) || (!MOCK_CONFIG.ENABLED && stats.holderCount === 0 && parseFloat(stats.totalSupply) === 0 && parseFloat(stats.totalMinted) === 0 && parseFloat(stats.totalBurned) === 0 && stats.destabilizationCount === 0) ? 'MAINTENANCE' : 'LIVE'}
+              </span>
             </div>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </TerminalLayout>
   );
 };
