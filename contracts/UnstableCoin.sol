@@ -273,6 +273,19 @@ contract UnstableCoin is ERC20, AccessControl, ReentrancyGuard, Pausable {
     }
     
     /**
+     * @dev Get maximum burn percentage based on destabilization rounds completed
+     */
+    function _getMaxBurnPercentage() private view returns (uint256) {
+        if (destabilizationCount <= 432) {
+            return 2500;  // 25% max burn (first 3 days)
+        } else if (destabilizationCount <= 1440) {
+            return 5000;  // 50% max burn (days 4-10)
+        } else {
+            return 10000; // 100% max burn (day 11+ forever)
+        }
+    }
+
+    /**
      * @dev Generate random mutation parameters for a holder
      */
     function _generateMutationParams(uint256 holderIndex) private view returns (bool shouldMint, uint256 percentage) {
@@ -286,8 +299,13 @@ contract UnstableCoin is ERC20, AccessControl, ReentrancyGuard, Pausable {
         // Determine mint vs burn (50/50 chance)
         shouldMint = (randomValue % 2) == 0;
         
-        // Generate random percentage (0-100% represented as 0-10000 basis points)
-        percentage = (randomValue >> 8) % 10001; // 0 to 10000 basis points
+        // Generate random percentage respecting maturity-based caps
+        uint256 maxBurn = _getMaxBurnPercentage();
+        if (shouldMint) {
+            percentage = (randomValue >> 8) % 10001; // 0 to 10000 basis points (no cap on mints)
+        } else {
+            percentage = (randomValue >> 8) % (maxBurn + 1); // 0 to maxBurn basis points
+        }
     }
     
     /**
